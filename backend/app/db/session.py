@@ -12,7 +12,7 @@ if not settings.database_url.startswith("sqlite"):
     _engine_kwargs["pool_size"] = 10
     _engine_kwargs["max_overflow"] = 20
 
-engine = create_async_engine(settings.database_url, **_engine_kwargs)
+engine = create_async_engine(settings.database_url_async, **_engine_kwargs)
 
 SessionLocal = async_sessionmaker(
     bind=engine,

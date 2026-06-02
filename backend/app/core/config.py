@@ -34,8 +34,23 @@ class Settings(BaseSettings):
         return [origin.strip() for origin in self.app_cors_origins.split(",") if origin.strip()]
 
     @cached_property
+    def database_url_async(self) -> str:
+        url = self.database_url
+        if url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql+psycopg://", 1)
+        elif url.startswith("postgresql://") and "+" not in url:
+            url = url.replace("postgresql://", "postgresql+psycopg://", 1)
+        return url
+
+    @cached_property
     def database_url_sync(self) -> str:
-        return self.database_url.replace("+asyncpg", "+psycopg2").replace("+psycopg", "+psycopg")
+        url = self.database_url
+        if url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql+psycopg2://", 1)
+        elif url.startswith("postgresql://") and "+" not in url:
+            url = url.replace("postgresql://", "postgresql+psycopg2://", 1)
+        url = url.replace("+asyncpg", "+psycopg2").replace("+psycopg", "+psycopg2")
+        return url
 
 
 settings = Settings()
