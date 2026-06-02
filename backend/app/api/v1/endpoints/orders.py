@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, HTTPException, Query, Response, status
+from fastapi import APIRouter, HTTPException, Query, status
 
 from app.api.v1.deps import CurrentUser, DbSession
 from app.repositories.customer_repository import CustomerRepository
@@ -60,7 +60,11 @@ async def create_order(
     if oversells:
         raise HTTPException(
             status.HTTP_409_CONFLICT,
-            detail={"code": "oversell", "message": "Insufficient stock for some items", "details": oversells},
+            detail={
+                "code": "oversell",
+                "message": "Insufficient stock for some items",
+                "details": oversells,
+            },
         )
 
     for product, qty in lines_data:

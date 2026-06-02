@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from decimal import Decimal
-
 from fastapi import APIRouter, HTTPException, Query, Response, status
 
 from app.api.v1.deps import CurrentUser, DbSession
