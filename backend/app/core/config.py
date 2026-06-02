@@ -46,10 +46,9 @@ class Settings(BaseSettings):
     def database_url_sync(self) -> str:
         url = self.database_url
         if url.startswith("postgres://"):
-            url = url.replace("postgres://", "postgresql+psycopg2://", 1)
+            url = url.replace("postgres://", "postgresql+psycopg://", 1)
         elif url.startswith("postgresql://") and "+" not in url:
-            url = url.replace("postgresql://", "postgresql+psycopg2://", 1)
-        url = url.replace("+asyncpg", "+psycopg2").replace("+psycopg", "+psycopg2")
+            url = url.replace("postgresql://", "postgresql+psycopg://", 1)
         return url
 
 
