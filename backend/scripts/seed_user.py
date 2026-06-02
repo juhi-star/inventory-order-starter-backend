@@ -24,7 +24,9 @@ from app.repositories.user_repository import UserRepository
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Create a user in the database.")
     parser.add_argument("--email", required=True, help="Login email (lowercased).")
-    parser.add_argument("--password", required=True, help="Plaintext password (will be Argon2 hashed).")
+    parser.add_argument(
+        "--password", required=True, help="Plaintext password (will be Argon2 hashed)."
+    )
     parser.add_argument("--full-name", default="", help="Display name. Optional.")
     parser.add_argument(
         "--role",
