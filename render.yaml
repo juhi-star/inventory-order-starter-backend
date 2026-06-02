@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: inventory-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    dockerBuildTarget: runtime
+    healthCheckPath: /api/v1/health/live
+    numInstances: 1
+    plan: starter
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_LOG_LEVEL
+        value: INFO
+      - key: APP_CORS_ORIGINS
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_ACCESS_TOKEN_TTL_SECONDS
+        value: 900
+      - key: JWT_REFRESH_TOKEN_TTL_SECONDS
+        value: 2592000
+      - key: SEED_ADMIN_EMAIL
+        value: admin@example.com
+      - key: SEED_ADMIN_PASSWORD
+        sync: false
+      - fromDatabase:
+          name: inventory-db
+          property: connectionString
+        key: DATABASE_URL
+
+databases:
+  - name: inventory-db
+    databaseName: inventory
+    user: inventory
+    plan: starter
+    postgresMajorVersion: 15
+    ipAllowList: []
