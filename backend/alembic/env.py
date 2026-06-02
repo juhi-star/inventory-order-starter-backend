@@ -10,6 +10,7 @@ if sys.platform == "win32":
 from alembic import context
 from app.core.config import settings
 from app.db.base import Base
+from app.models import Customer, Order, OrderLine, Product  # noqa: F401 — registers tables with Base.metadata
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
