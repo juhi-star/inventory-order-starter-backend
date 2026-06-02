@@ -77,7 +77,7 @@ jobs:
       - name: build backend image
         uses: docker/build-push-action@v6
         with:
-          context: ./backend
+          context: .
           target: runtime
           push: false
           tags: inventory-backend:ci

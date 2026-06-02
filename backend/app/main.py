@@ -14,7 +14,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from app.api.v1.router import api_router
 from app.core.config import settings
 from app.core.limiter import limiter
-from app.core.logging import configure_logging
+from app.core.logging import configure_logging, get_logger
 from app.core.middleware import RequestContextMiddleware
 from app.db.session import SessionLocal
 from app.services.admin_seed import seed_admin_if_empty
@@ -23,6 +23,11 @@ from app.services.admin_seed import seed_admin_if_empty
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     configure_logging(settings.app_log_level)
+    logger = get_logger("app")
+    if settings.jwt_secret.startswith("CHANGE-ME-"):
+        logger.warning(
+            "JWT_SECRET is still set to the default — generate a real secret for production"
+        )
     try:
         async with SessionLocal() as session:
             await seed_admin_if_empty(session)

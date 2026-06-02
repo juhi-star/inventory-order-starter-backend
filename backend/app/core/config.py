@@ -21,7 +21,10 @@ class Settings(BaseSettings):
     database_url: str
     redis_url: str = "redis://redis:6379/0"
 
-    jwt_secret: str = Field(min_length=32)
+    jwt_secret: str = Field(
+        default="CHANGE-ME-REPLACE-WITH-A-64-CHAR-RANDOM-STRING-IN-PRODUCTION",
+        min_length=32,
+    )
     jwt_access_token_ttl_seconds: int = 900
     jwt_refresh_token_ttl_seconds: int = 2592000
     jwt_algorithm: str = "HS256"
