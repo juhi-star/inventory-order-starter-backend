@@ -24,7 +24,7 @@ services:
       - key: SEED_ADMIN_EMAIL
         value: admin@example.com
       - key: SEED_ADMIN_PASSWORD
-        sync: false
+        generateValue: true
       - fromDatabase:
           name: inventory-db
           property: connectionString

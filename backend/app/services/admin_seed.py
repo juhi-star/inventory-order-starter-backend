@@ -8,6 +8,8 @@ from app.repositories.user_repository import UserRepository
 
 
 async def seed_admin_if_empty(session: AsyncSession) -> bool:
+    if not settings.seed_admin_password:
+        return False
     users = UserRepository(session)
     if await users.count() > 0:
         return False

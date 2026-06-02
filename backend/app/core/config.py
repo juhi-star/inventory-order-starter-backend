@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     jwt_algorithm: str = "HS256"
 
     seed_admin_email: str = "admin@example.com"
-    seed_admin_password: str = Field(min_length=8)
+    seed_admin_password: str | None = None
 
     @cached_property
     def cors_origin_list(self) -> list[str]:
